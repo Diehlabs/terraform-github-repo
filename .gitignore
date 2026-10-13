@@ -3,3 +3,7 @@
 *.key
 .DS_Store
 .terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
