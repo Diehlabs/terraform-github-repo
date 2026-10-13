@@ -12,12 +12,6 @@ resource "github_repository" "repo" {
       repository = var.template.repo_name
     }
   }
-
-  lifecycle {
-    ignore_changes = [
-      etag,
-    ]
-  }
 }
 
 data "github_branch" "main" {
