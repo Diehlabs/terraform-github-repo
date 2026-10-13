@@ -21,6 +21,7 @@ variable "managed_by" {
 
 variable "is_template" {
   description = "Set to true to tell GitHub that this is a template repository."
+  type        = bool
   default     = false
 }
 
