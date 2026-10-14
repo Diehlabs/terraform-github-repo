@@ -42,3 +42,15 @@ variable "template" {
     repo_name = null
   }
 }
+
+variable "default_branch" {
+  description = "Name of the branch to set as the repository default"
+  type        = string
+  default     = "main"
+}
+
+variable "archived" {
+  description = "Set to true to archive the repository (read-only on GitHub)"
+  type        = bool
+  default     = false
+}
