@@ -4,6 +4,7 @@ resource "github_repository" "repo" {
   visibility  = var.visibility
   auto_init   = true # need to do this to ensure we can set the main branch as default below
   is_template = var.is_template
+  archived    = var.archived
 
   dynamic "template" {
     for_each = var.use_template ? [1] : []
@@ -19,7 +20,7 @@ data "github_branch" "main" {
     github_repository.repo
   ]
   repository = github_repository.repo.name
-  branch     = "main"
+  branch     = var.default_branch
 }
 
 resource "github_branch_default" "default" {
