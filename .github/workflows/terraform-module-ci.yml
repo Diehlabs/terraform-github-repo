@@ -5,35 +5,20 @@ on:
       - '**'
   pull_request:
     branches:
-      - 'main'
+      - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  tflint:
-    uses: Diehlabs/shared-workflows/.github/workflows/tflint.yml@main
-
-  checkov:
-    uses: Diehlabs/shared-workflows/.github/workflows/checkov.yml@main
-    with:
-      directory: ${{ github.workspace }}
-    needs: tflint
-    if: success()
-
-  terrascan:
-    uses: Diehlabs/shared-workflows/.github/workflows/terrascan.yml@main
-    needs: tflint
-    if: success()
-
-  terratest:
-    uses: Diehlabs/shared-workflows/.github/workflows/terratest.yml@main
-    needs: tflint
-    if: success()
-    with:
-      terraform_version: '1.0.8'
-
-  release:
-    uses: Diehlabs/shared-workflows/.github/workflows/github-release.yml@main
-    needs: terratest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  ci:
     permissions:
       contents: write
+      checks: write
+      security-events: write
+    uses: Diehlabs/shared-workflows/.github/workflows/terraform-module.yml@terraform-module-pipeline
+    with:
+      terraform_version: 1.0.8
+      test_directory: test
+    secrets: inherit
